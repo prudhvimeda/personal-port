@@ -1,10 +1,17 @@
 (() => {
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  // Live IST clock in the hero
+  // Live Cottbus clock in the hero (CET / CEST)
   const clock = document.getElementById('clock');
-  const fmt = new Intl.DateTimeFormat('en-GB', { timeZone: 'Asia/Kolkata', hour: '2-digit', minute: '2-digit' });
-  const tick = () => { clock.textContent = fmt.format(new Date()); };
+  const tz = document.getElementById('tz');
+  const fmt = new Intl.DateTimeFormat('en-GB', { timeZone: 'Europe/Berlin', hour: '2-digit', minute: '2-digit', timeZoneName: 'short' });
+  const tick = () => {
+    const parts = fmt.formatToParts(new Date());
+    const get = (t) => parts.find((p) => p.type === t)?.value;
+    clock.textContent = `${get('hour')}:${get('minute')}`;
+    const name = get('timeZoneName');
+    if (name) tz.textContent = /\+2/.test(name) ? 'CEST' : /\+1/.test(name) ? 'CET' : name;
+  };
   tick();
   setInterval(tick, 15000);
 

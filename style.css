@@ -500,6 +500,37 @@ html.travel .sticky-card { visibility: hidden; }
 .project:hover .game-cards span:nth-child(1) { transform: rotate(-16deg) translateX(-8px); }
 .project:hover .game-cards span:nth-child(3) { transform: rotate(16deg) translateX(8px); }
 
+.live-dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: #2fbf5b; margin-right: 8px; vertical-align: 1px; animation: pulse 2s infinite; }
+
+.v-voice { background: radial-gradient(90% 90% at 30% 40%, #1f2a4d, #0a0d18 70%); }
+.orb {
+  position: absolute; left: 22%; top: 50%;
+  width: 34%; aspect-ratio: 1; translate: -50% -50%;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #fff 0 4%, #9fb4ff 18%, #5b6cf0 45%, #e2742c 85%);
+  box-shadow: 0 0 60px rgba(120,140,255,.45);
+  animation: breathe 3.2s ease-in-out infinite;
+}
+@keyframes breathe { 50% { transform: scale(1.08); box-shadow: 0 0 90px rgba(226,116,44,.45); } }
+.bubbles { position: absolute; right: 7%; top: 50%; translate: 0 -50%; width: 46%; display: grid; gap: 10px; }
+.bubbles span { font-size: clamp(.68rem, 1.1vw, .82rem); line-height: 1.35; padding: 10px 14px; border-radius: 16px; }
+.bubbles .q { justify-self: end; background: var(--accent); color: #fff; border-bottom-right-radius: 4px; }
+.bubbles .a { justify-self: start; background: rgba(255,255,255,.12); color: rgba(255,255,255,.88); border-bottom-left-radius: 4px; }
+
+.v-f1 { background: linear-gradient(140deg, #3a0d0d, #120606); }
+.track { position: absolute; inset: 0; overflow: hidden; }
+.track span {
+  position: absolute; left: -10%; width: 120%; height: 10px;
+  background: repeating-linear-gradient(90deg, #fff 0 14px, #c8102e 14px 28px);
+  transform: rotate(-14deg);
+  opacity: .85;
+}
+.track span:nth-child(1) { top: 28%; }
+.track span:nth-child(2) { top: 48%; height: 26px; background: repeating-conic-gradient(#fff 0 25%, #111 0 50%) 0 0 / 26px 26px; opacity: .9; }
+.track span:nth-child(3) { top: 72%; }
+.project:hover .track span { animation: race .8s linear infinite; }
+@keyframes race { to { background-position: -28px 0; } }
+
 .more-card {
   display: flex; flex-direction: column; align-items: center; text-align: center; gap: 6px;
   margin-top: 22px;
@@ -632,6 +663,8 @@ html.travel .sticky-card { visibility: hidden; }
 
   .work-grid { grid-template-columns: 1fr; }
   .contact-title br { display: none; }
+  .orb { width: 26%; left: 18%; }
+  .bubbles { width: 58%; right: 5%; }
   .v-skin code { font-size: .62rem; right: 12px; left: 12px; bottom: 12px; }
 
   .cert-list li { grid-template-columns: 32px 1fr; gap: 4px 12px; }
