@@ -86,19 +86,26 @@
     });
   });
 
-  // Photo card that travels with the content: it leaves the hero, glides
-  // into the skills column while tilting, flips to its back face, stays
-  // pinned beside the skill cards, then scrolls away when they end.
+  // Photo card that travels with the content. Timeline (in px at an 800px
+  // tall window, scaled to the real height):
+  //     0–330  glide right/down to the skills column, tilting to 8°
+  //   440–1060 flip to the back face while the tilt straightens
+  //  1100 → pin end − 600  slow grow-and-settle while pinned
+  //  pin end − 500 → pin end − 100  flip back to the front
+  //  after pin end  scroll away with the content
+  // Progress follows a smoothed scroll value so the motion trails the
+  // wheel slightly instead of snapping.
   const card = document.getElementById('flipCard');
   const slot = document.querySelector('.portrait-slot');
   const target = document.querySelector('.sticky-card');
   const cardsCol = document.querySelector('.skills-cards');
   const slides = [...document.querySelectorAll('.slides img')];
-  const desktop = window.matchMedia('(min-width: 901px)');
+  const desktop = window.matchMedia('(min-width: 761px)');
 
   const clamp01 = (v) => Math.min(1, Math.max(0, v));
   const lerp = (a, b, t) => a + (b - a) * t;
-  const ease = (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
+  const inOut = (t) => (t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2);
+  const range = (s, from, to) => clamp01((s - from) / (to - from));
 
   let m = null; // cached measurements
   const measure = () => {
@@ -113,65 +120,96 @@
     const r = slot.getBoundingClientRect();
     const t = target.getBoundingClientRect();
     const vh = window.innerHeight;
+    const k = vh / 800;
+    const ty = vh / 2 + 22 * k;
     m = {
       w: r.width,
       h: r.height,
-      // where the card starts (viewport coords at scrollY = 0)
+      k,
+      // start: the hero slot (viewport coords at scrollY = 0)
       sx: r.left + r.width / 2,
       sy: r.top + s + r.height / 2,
-      // where it settles: centred on the skills column, middle of the screen
+      // pinned spot: centre of the skills column, just below mid-screen
       tx: t.left + t.width / 2,
-      ty: vh / 2,
-      ts: Math.min(t.width / r.width, (vh - 180) / r.height),
-      vh,
+      ty,
+      // scroll position where the card's bottom meets the last skill card
+      pinEnd: cardsCol.getBoundingClientRect().bottom + s - ty - r.height / 2,
     };
     card.style.width = m.w + 'px';
     card.style.height = m.h + 'px';
   };
 
-  let ticking = false;
+  let smooth = window.scrollY;
+  let raf = 0;
   const render = () => {
-    ticking = false;
+    raf = 0;
     if (!m) return;
-    const s = window.scrollY;
-    const move = ease(clamp01(s / (m.vh * 0.75)));
-    const flip = ease(clamp01((s - m.vh * 0.35) / (m.vh * 0.6)));
+    const real = window.scrollY;
+    smooth += (real - smooth) * 0.14;
+    if (Math.abs(real - smooth) < 0.3) smooth = real;
+    const s = smooth;
+    const k = m.k;
 
-    let cx = lerp(m.sx, m.tx, move);
-    let cy = lerp(m.sy - s * (1 - move), m.ty, move);
-    const sc = lerp(1, m.ts, move);
-    const tilt = Math.sin(move * Math.PI) * 9;
+    const move = inOut(range(s, 0, 330 * k));
+    const flip = inOut(range(s, 440 * k, 1060 * k));
+    const flipBack = inOut(range(s, m.pinEnd - 500 * k, m.pinEnd - 100 * k));
+    const grow = range(s, 1100 * k, Math.max(1200 * k, m.pinEnd - 600 * k));
 
-    // Release: once the last skill card passes, the card scrolls up with it
-    const end = cardsCol.getBoundingClientRect().bottom;
-    const bottom = cy + (m.h * sc) / 2;
-    if (bottom > end) cy -= bottom - end;
+    const cx = lerp(m.sx, m.tx, move);
+    let cy = lerp(m.sy, m.ty, move);
+    const tilt = 8 * move * (1 - flip);
+    const rotY = 180 * flip - 180 * flipBack;
+    const scale = 1 + 0.18 * Math.pow(Math.sin(Math.PI * Math.pow(grow, 1.4)), 2);
+
+    // Release: past the pin end the card scrolls up with the content
+    if (real > m.pinEnd) cy -= real - m.pinEnd;
 
     card.style.transform =
       `translate3d(${cx - m.w / 2}px, ${cy - m.h / 2}px, 0) ` +
-      `perspective(1400px) rotateZ(${tilt}deg) rotateY(${flip * 180}deg) scale(${sc})`;
+      `perspective(1400px) rotateZ(${tilt}deg) rotateY(${rotY}deg) scale(${scale})`;
+
+    if (smooth !== real) raf = requestAnimationFrame(render);
   };
   const onScroll = () => {
-    if (!ticking) { ticking = true; requestAnimationFrame(render); }
+    if (!raf) raf = requestAnimationFrame(render);
   };
 
-  // Back face cycles photos as each skill card comes into view
-  if (slides.length) {
-    const skillIo = new IntersectionObserver((entries) => {
-      entries.forEach((e) => {
-        if (!e.isIntersecting) return;
-        const i = [...cardsCol.children].indexOf(e.target) % slides.length;
-        slides.forEach((img, j) => img.classList.toggle('on', j === i));
-      });
-    }, { rootMargin: '-45% 0px -45% 0px' });
-    [...cardsCol.children].forEach((c) => skillIo.observe(c));
-  }
+  // One photo per scroll stage:
+  //   hero (front)            → bamberg-night
+  //   after the flip (back)   → bamberg-river
+  //   halfway through skills  → oktoberfest-2 on the back
+  //   flip back (front)       → bamberg-night again
+  // On narrow screens the card does not travel, so the front photo simply
+  // steps through all of them as the hero scrolls away.
+  const frontSlides = [...document.querySelectorAll('.front-slides img')];
+  const backSlides = [...document.querySelectorAll('.back-slides img')];
+  const shown = { front: 0, back: 0 };
+  const show = (list, key, i) => {
+    if (shown[key] === i) return;
+    shown[key] = i;
+    list.forEach((img, j) => img.classList.toggle('on', j === i));
+  };
+  const updatePhotos = () => {
+    const s = window.scrollY;
+    if (m) {
+      const half = (1060 * m.k + (m.pinEnd - 500 * m.k)) / 2;
+      const late = s > half;
+      show(backSlides, 'back', late ? 1 : 0);
+      show(frontSlides, 'front', 0);
+    } else {
+      const step = window.innerHeight * 0.15;
+      show(frontSlides, 'front', Math.min(frontSlides.length - 1, Math.floor(s / step)));
+    }
+  };
+  window.addEventListener('scroll', updatePhotos, { passive: true });
 
   const remeasure = () => {
     // measure with the card's own transform cleared so the slot rect is clean
     card.style.transform = '';
     measure();
+    smooth = window.scrollY;
     render();
+    updatePhotos();
   };
   window.addEventListener('scroll', onScroll, { passive: true });
   window.addEventListener('resize', remeasure);

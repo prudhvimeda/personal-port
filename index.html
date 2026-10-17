@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800;900&family=Inter:wght@400;500;600&family=Caveat:wght@500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css?v=8">
 </head>
 <body>
 
@@ -18,21 +18,23 @@
 
     <div class="hero-side hero-left reveal">
       <p class="hero-kicker">Machine Learning &amp; Full-Stack</p>
-      <h1 class="hero-name"><span class="sr-only">Prudhvi Meda — </span>PRUDHVI</h1>
+      <h1 class="hero-name"><span class="sr-only">Prudhvi Narayana Meda — </span>PRUDHVI<span class="hero-middle" aria-hidden="true">NARAYANA</span></h1>
     </div>
 
     <div class="portrait-slot">
       <figure class="flip-card" id="flipCard">
         <div class="face face-front">
-          <img src="photos/oktoberfest.jpg" alt="Prudhvi Meda standing in front of a decorated brewery wagon" width="900" height="1200">
+          <div class="slides front-slides">
+            <img src="photos/bamberg-night.jpg" alt="Prudhvi Narayana Meda in a cap and leather jacket in front of an old stone building at dusk" width="630" height="840" class="on">
+            <img src="photos/bamberg-river.jpg" alt="">
+            <img src="photos/oktoberfest-2.jpg" alt="">
+          </div>
           <span class="portrait-badge"><span class="dot"></span> Open to work</span>
         </div>
         <div class="face face-back" aria-hidden="true">
-          <div class="slides">
+          <div class="slides back-slides">
             <img src="photos/bamberg-river.jpg" alt="" class="on">
-            <img src="photos/bamberg-night.jpg" alt="" loading="lazy">
-            <img src="photos/oktoberfest-2.jpg" alt="" loading="lazy">
-            <img src="portrait.jpg" alt="" loading="lazy">
+            <img src="photos/oktoberfest-2.jpg" alt="">
           </div>
           <div class="sticky-overlay">
             <p class="sticky-name">Prudhvi Meda</p>
@@ -449,6 +451,6 @@
 
   <div class="toast" role="status" aria-live="polite"></div>
 
-  <script src="script.js"></script>
+  <script src="script.js?v=8"></script>
 </body>
 </html>
