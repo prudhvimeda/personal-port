@@ -79,15 +79,96 @@
     });
   });
 
-  // Gentle tilt on the hero portrait
-  const portrait = document.querySelector('.hero-portrait');
-  if (portrait && !reduceMotion && window.matchMedia('(hover: hover)').matches) {
-    portrait.addEventListener('mousemove', (e) => {
-      const r = portrait.getBoundingClientRect();
-      const x = (e.clientX - r.left) / r.width - 0.5;
-      const y = (e.clientY - r.top) / r.height - 0.5;
-      portrait.style.transform = `perspective(800px) rotateY(${x * 8}deg) rotateX(${-y * 8}deg) scale(1.02)`;
-    });
-    portrait.addEventListener('mouseleave', () => { portrait.style.transform = ''; });
+  // Photo card that travels with the content: it leaves the hero, glides
+  // into the skills column while tilting, flips to its back face, stays
+  // pinned beside the skill cards, then scrolls away when they end.
+  const card = document.getElementById('flipCard');
+  const slot = document.querySelector('.portrait-slot');
+  const target = document.querySelector('.sticky-card');
+  const cardsCol = document.querySelector('.skills-cards');
+  const slides = [...document.querySelectorAll('.slides img')];
+  const desktop = window.matchMedia('(min-width: 901px)');
+
+  const clamp01 = (v) => Math.min(1, Math.max(0, v));
+  const lerp = (a, b, t) => a + (b - a) * t;
+  const ease = (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
+
+  let m = null; // cached measurements
+  const measure = () => {
+    const travel = desktop.matches && !reduceMotion;
+    document.documentElement.classList.toggle('travel', travel);
+    if (!travel) {
+      card.style.cssText = '';
+      m = null;
+      return;
+    }
+    const s = window.scrollY;
+    const r = slot.getBoundingClientRect();
+    const t = target.getBoundingClientRect();
+    const vh = window.innerHeight;
+    m = {
+      w: r.width,
+      h: r.height,
+      // where the card starts (viewport coords at scrollY = 0)
+      sx: r.left + r.width / 2,
+      sy: r.top + s + r.height / 2,
+      // where it settles: centred on the skills column, middle of the screen
+      tx: t.left + t.width / 2,
+      ty: vh / 2,
+      ts: Math.min(t.width / r.width, (vh - 180) / r.height),
+      vh,
+    };
+    card.style.width = m.w + 'px';
+    card.style.height = m.h + 'px';
+  };
+
+  let ticking = false;
+  const render = () => {
+    ticking = false;
+    if (!m) return;
+    const s = window.scrollY;
+    const move = ease(clamp01(s / (m.vh * 0.75)));
+    const flip = ease(clamp01((s - m.vh * 0.35) / (m.vh * 0.6)));
+
+    let cx = lerp(m.sx, m.tx, move);
+    let cy = lerp(m.sy - s * (1 - move), m.ty, move);
+    const sc = lerp(1, m.ts, move);
+    const tilt = Math.sin(move * Math.PI) * 9;
+
+    // Release: once the last skill card passes, the card scrolls up with it
+    const end = cardsCol.getBoundingClientRect().bottom;
+    const bottom = cy + (m.h * sc) / 2;
+    if (bottom > end) cy -= bottom - end;
+
+    card.style.transform =
+      `translate3d(${cx - m.w / 2}px, ${cy - m.h / 2}px, 0) ` +
+      `perspective(1400px) rotateZ(${tilt}deg) rotateY(${flip * 180}deg) scale(${sc})`;
+  };
+  const onScroll = () => {
+    if (!ticking) { ticking = true; requestAnimationFrame(render); }
+  };
+
+  // Back face cycles photos as each skill card comes into view
+  if (slides.length) {
+    const skillIo = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (!e.isIntersecting) return;
+        const i = [...cardsCol.children].indexOf(e.target) % slides.length;
+        slides.forEach((img, j) => img.classList.toggle('on', j === i));
+      });
+    }, { rootMargin: '-45% 0px -45% 0px' });
+    [...cardsCol.children].forEach((c) => skillIo.observe(c));
   }
+
+  const remeasure = () => {
+    // measure with the card's own transform cleared so the slot rect is clean
+    card.style.transform = '';
+    measure();
+    render();
+  };
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', remeasure);
+  desktop.addEventListener('change', remeasure);
+  window.addEventListener('load', remeasure);
+  remeasure();
 })();
