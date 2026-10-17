@@ -1,142 +1,93 @@
-document.addEventListener('DOMContentLoaded', () => {
-    // 1. Custom Cursor Logic
-    const cursor = document.getElementById('custom-cursor');
-    const trail = document.getElementById('cursor-trail');
-    const interactiveElements = document.querySelectorAll('a, button, .list-tech li');
+(() => {
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    let mouseX = 0;
-    let mouseY = 0;
-    let trailX = 0;
-    let trailY = 0;
+  // Live IST clock in the hero
+  const clock = document.getElementById('clock');
+  const fmt = new Intl.DateTimeFormat('en-GB', { timeZone: 'Asia/Kolkata', hour: '2-digit', minute: '2-digit' });
+  const tick = () => { clock.textContent = fmt.format(new Date()); };
+  tick();
+  setInterval(tick, 15000);
 
-    document.addEventListener('mousemove', (e) => {
-        mouseX = e.clientX;
-        mouseY = e.clientY;
+  document.getElementById('year').textContent = new Date().getFullYear();
 
-        // Update main cursor immediately
-        cursor.style.left = `${mouseX}px`;
-        cursor.style.top = `${mouseY}px`;
-    });
+  // Reveal-on-scroll
+  const revealEls = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window && !reduceMotion) {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting) {
+          e.target.classList.add('in');
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    revealEls.forEach((el) => io.observe(el));
+  } else {
+    revealEls.forEach((el) => el.classList.add('in'));
+  }
 
-    // Smooth trail animation
-    function animateTrail() {
-        // Linear interpolation for smooth trailing effect
-        trailX += (mouseX - trailX) * 0.2;
-        trailY += (mouseY - trailY) * 0.2;
-
-        trail.style.left = `${trailX}px`;
-        trail.style.top = `${trailY}px`;
-
-        requestAnimationFrame(animateTrail);
-    }
-    animateTrail();
-
-    // Hover effects for custom cursor
-    interactiveElements.forEach(el => {
-        el.addEventListener('mouseenter', () => {
-            cursor.classList.add('hover');
-            trail.style.opacity = '0'; // Hide trail on hover
-        });
-
-        el.addEventListener('mouseleave', () => {
-            cursor.classList.remove('hover');
-            trail.style.opacity = '1';
-        });
-    });
-
-    // 1.5 Easter Egg Logic
-    const easterEggTriggers = document.querySelectorAll('.easter-egg-trigger');
-    const floatingImage = document.getElementById('floating-image');
-
-    easterEggTriggers.forEach(trigger => {
-        trigger.addEventListener('mouseenter', (e) => {
-            const imgSrc = e.target.getAttribute('data-image');
-            if (imgSrc) {
-                floatingImage.style.backgroundImage = `url(${imgSrc})`;
-                floatingImage.classList.remove('hidden');
-                // Added slight delay to class toggle for transform animation
-                setTimeout(() => {
-                    floatingImage.classList.add('visible');
-                }, 10);
-
-                // Also expand the custom cursor
-                cursor.classList.add('hover');
-                trail.style.opacity = '0';
-            }
-        });
-
-        trigger.addEventListener('mousemove', (e) => {
-            // Position the floating image near the cursor, but offset slightly
-            floatingImage.style.left = `${e.clientX + 120}px`;
-            floatingImage.style.top = `${e.clientY - 50}px`;
-        });
-
-        trigger.addEventListener('mouseleave', () => {
-            floatingImage.classList.remove('visible');
-            setTimeout(() => {
-                floatingImage.classList.add('hidden');
-            }, 300); // Wait for transition to finish
-
-            cursor.classList.remove('hover');
-            trail.style.opacity = '1';
-        });
-    });
-
-    // 2. Navigation Click and Scroll Sync
-    const navLinks = document.querySelectorAll('.nav-links a');
-    const contentArea = document.querySelector('.content');
-
-    navLinks.forEach(link => {
-        link.addEventListener('click', (e) => {
-            e.preventDefault();
-            const targetId = link.getAttribute('href').substring(1);
-            const targetSection = document.getElementById(targetId);
-
-            // Update active state manually before scroll completes
-            navLinks.forEach(l => l.classList.remove('active'));
-            link.classList.add('active');
-
-            if (targetSection) {
-                targetSection.scrollIntoView({ behavior: 'smooth' });
-            }
-        });
-    });
-
-    // Intersection Observer to reveal sections on scroll
-    // and update navigation active state
-    const sections = document.querySelectorAll('.dynamic-section');
-
-    const observerOptions = {
-        root: contentArea,
-        rootMargin: '0px',
-        threshold: 0.4
+  // Statement: words light up as you scroll through it
+  const fill = document.querySelector('[data-fill]');
+  if (fill) {
+    const words = fill.textContent.trim().split(/\s+/);
+    fill.innerHTML = words.map((w) => `<span class="w">${w}</span>`).join(' ');
+    const spans = fill.querySelectorAll('.w');
+    const update = () => {
+      const r = fill.getBoundingClientRect();
+      const vh = window.innerHeight;
+      const progress = Math.min(1, Math.max(0, (vh * 0.85 - r.top) / (r.height + vh * 0.35)));
+      const lit = Math.round(progress * spans.length);
+      spans.forEach((s, i) => s.classList.toggle('on', i < lit));
     };
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    update();
+  }
 
-    const sectionObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                // Reveal section animation
-                entry.target.classList.remove('hidden');
+  // Highlight the dock link for the section in view
+  const links = [...document.querySelectorAll('.dock a[href^="#"]')];
+  const sections = links
+    .map((a) => document.querySelector(a.getAttribute('href')))
+    .filter(Boolean);
+  if ('IntersectionObserver' in window) {
+    const navIo = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (!e.isIntersecting) return;
+        links.forEach((a) => a.classList.toggle('active', a.getAttribute('href') === '#' + e.target.id));
+      });
+    }, { rootMargin: '-45% 0px -50% 0px' });
+    sections.forEach((s) => navIo.observe(s));
+  }
 
-                // Update nav active link based on scroll
-                const id = entry.target.getAttribute('id');
-                navLinks.forEach(link => {
-                    link.classList.remove('active');
-                    if (link.getAttribute('href') === `#${id}`) {
-                        link.classList.add('active');
-                    }
-                });
-            }
-        });
-    }, observerOptions);
-
-    sections.forEach(section => {
-        sectionObserver.observe(section);
+  // Copy e-mail buttons
+  const toast = document.querySelector('.toast');
+  let toastTimer;
+  const showToast = (msg) => {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => toast.classList.remove('show'), 2000);
+  };
+  document.querySelectorAll('[data-copy]').forEach((btn) => {
+    btn.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(btn.dataset.copy);
+        showToast('E-mail copied');
+      } catch {
+        showToast(btn.dataset.copy);
+      }
     });
+  });
 
-    // Make the first section (home) visible initially
-    setTimeout(() => {
-        const homeSection = document.getElementById('home');
-        if (homeSection) homeSection.classList.remove('hidden');
-    }, 100);
-});
+  // Gentle tilt on the hero portrait
+  const portrait = document.querySelector('.hero-portrait');
+  if (portrait && !reduceMotion && window.matchMedia('(hover: hover)').matches) {
+    portrait.addEventListener('mousemove', (e) => {
+      const r = portrait.getBoundingClientRect();
+      const x = (e.clientX - r.left) / r.width - 0.5;
+      const y = (e.clientY - r.top) / r.height - 0.5;
+      portrait.style.transform = `perspective(800px) rotateY(${x * 8}deg) rotateX(${-y * 8}deg) scale(1.02)`;
+    });
+    portrait.addEventListener('mouseleave', () => { portrait.style.transform = ''; });
+  }
+})();

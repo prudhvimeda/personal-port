@@ -1,239 +1,382 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Prudhvi Narayana Meda - Portfolio</title>
-    <meta name="description"
-        content="Personal portfolio of Prudhvi Narayana Meda. AI Master's Student, Content Creator, and ML/DL Engineer.">
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;600&display=swap"
-        rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prudhvi Meda — ML & Full-Stack Developer</title>
+  <meta name="description" content="Prudhvi Narayana Meda — Computer Science graduate building machine learning models and full-stack web applications.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800;900&family=Inter:wght@400;500;600&family=Caveat:wght@500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
-    <div id="custom-cursor"></div>
-    <div id="cursor-trail"></div>
 
-    <main class="container">
-        <!-- Left Navigation / Information Column -->
-        <nav class="sidebar">
-            <div class="logo">
-                <a href="#home">PRUDHVI<br>MEDA.</a>
-            </div>
+  <!-- ============ HERO ============ -->
+  <header class="hero" id="home">
+    <div class="hero-bg" aria-hidden="true"></div>
 
-            <div class="nav-links">
-                <ul>
-                    <li><a href="#about" class="active">ABOUT[01]</a></li>
-                    <li><a href="#education">EDUCATION[02]</a></li>
-                    <li><a href="#skills">SKILLS[03]</a></li>
-                    <li><a href="#projects">PROJECTS[04]</a></li>
-                    <li><a href="#interests">INTERESTS[05]</a></li>
-                    <li><a href="#resume">RESUME[06]</a></li>
-                    <li><a href="#build">BUILD PROCESS[07]</a></li>
-                    <li><a href="#contact">CONTACT[08]</a></li>
-                </ul>
-            </div>
+    <div class="hero-side hero-left reveal">
+      <p class="hero-kicker">Machine Learning &amp; Full-Stack</p>
+      <h1 class="hero-name"><span class="sr-only">Prudhvi Meda — </span>PRUDHVI</h1>
+    </div>
 
-            <div class="status-marker">
-                CURRENTLY AI STUDENT @ BTU COTTBUS
-            </div>
-        </nav>
+    <figure class="hero-portrait reveal" style="--d:.1s">
+      <img src="portrait.jpg" alt="Portrait of Prudhvi Meda" width="681" height="1024">
+      <span class="portrait-badge"><span class="dot"></span> Open to work</span>
+    </figure>
 
-        <!-- Right Content Area -->
-        <div class="content">
-            <div class="background-overlay"></div>
-            <!-- Added hero background image -->
-            <div class="hero-bg-image" style="background-image: url('portrait.jpg');"></div>
+    <div class="hero-side hero-right reveal" style="--d:.2s">
+      <p class="hero-kicker">Software Developer</p>
+      <p class="hero-name" aria-hidden="true">MEDA</p>
+      <p class="hero-meta">Narasaraopet, India · <span id="clock">--:--</span> IST</p>
+    </div>
 
-            <section id="home" class="dynamic-section">
-                <div class="hero-content">
-                    <h1 class="glitch" data-text="PRUDHVI NARAYANA MEDA">PRUDHVI NARAYANA MEDA</h1>
-                    <p class="subtitle fade-in"><span class="easter-egg-trigger" data-image="portrait.jpg">AI
-                            Enthusiast</span> • ML/DL Engineer • Content Creator</p>
-                </div>
-            </section>
+    <a href="#skills" class="scroll-hint" aria-label="Scroll to skills">
+      <svg width="14" height="22" viewBox="0 0 14 22" fill="none"><rect x="1" y="1" width="12" height="20" rx="6" stroke="currentColor" stroke-width="1.5"/><circle class="wheel" cx="7" cy="7" r="1.6" fill="currentColor"/></svg>
+    </a>
+  </header>
 
-            <section id="about" class="dynamic-section hidden">
-                <div class="text-block section-grid">
-                    <div class="section-text">
-                        <h2>01. ABOUT 👤</h2>
-                        <p>I build things at the intersection of Artificial Intelligence and creativity. As an AI
-                            Master's student with a strong background in Machine Learning and Deep Learning (ML/DL) 🧠, I aim to
-                            create impactful digital experiences ✨.</p>
-                    </div>
-                    <div class="section-image-container">
-                        <img src="portrait.jpg" alt="Prudhvi Narayana Meda" class="section-pic">
-                    </div>
-                </div>
-            </section>
+  <!-- ============ FLOATING NAV ============ -->
+  <nav class="dock" aria-label="Primary">
+    <a href="#home" class="dock-home" aria-label="Home">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3 2 11.5h3V21h5.5v-6h3v6H19v-9.5h3z"/></svg>
+    </a>
+    <a href="#skills">Skills</a>
+    <a href="#about" class="hide-sm">About</a>
+    <a href="#work">Projects</a>
+    <a href="#journey">Journey</a>
+    <a href="#contact" class="dock-cta">Contact<span class="hide-sm"> me</span></a>
+  </nav>
 
-            <section id="education" class="dynamic-section hidden">
-                <div class="text-block section-grid">
-                    <div class="section-text">
-                        <h2>02. EDUCATION 🎓</h2>
-                        <div class="item">
-                            <h3>M.Sc. Artificial Intelligence</h3>
-                            <p class="meta">BTU Cottbus, Germany | Currently Pursuing</p>
-                        </div>
-                        <div class="item">
-                            <h3>B.Tech Computer Science and Engineering</h3>
-                            <p class="meta">SRKR Engineering College | 7.74 CGPA | 2020 - 2024</p>
-                        </div>
-                    </div>
-                    <div class="section-image-container">
-                        <img src="education.png" alt="Abstract Education Structure" class="section-pic">
-                    </div>
-                </div>
-            </section>
+  <main>
 
-            <section id="skills" class="dynamic-section hidden">
-                <div class="text-block section-grid">
-                    <div class="section-text">
-                        <h2>03. SKILLS & CERTIFICATIONS 🛠️</h2>
-                        <ul class="list-tech">
-                            <li>[01] PYTHON (NumPy, Pandas, Sklearn, Matplotlib)</li>
-                            <li>[02] C, C++, R, SQL, HTML, CSS, JavaScript</li>
-                            <li>[03] ML (Clustering, Association, RF, XGBoost)</li>
-                            <li>[04] NEURAL NETWORKS (LSTM, CNN, RNN)</li>
-                            <li>[05] Deep Learning (VGG16, Inception V3)</li>
-                        </ul>
-                        <br>
-                        <ul class="inline-list">
-                            <li>Google Cloud Data Analyst</li>
-                            <li>NPTEL Deep Learning</li>
-                            <li>Cisco Python</li>
-                        </ul>
-                    </div>
-                    <div class="section-image-container">
-                        <img src="skills.png" alt="Neural Network Abstract" class="section-pic">
-                    </div>
-                </div>
-            </section>
+    <!-- ============ SKILLS ============ -->
+    <section class="skills" id="skills">
+      <div class="skills-cards">
 
-            <section id="projects" class="dynamic-section hidden">
-                <div class="text-block section-grid">
-                    <div class="section-text">
-                        <h2>04. EXPERIENCE & PROJECTS</h2>
-                        <ul class="list-tech projects-list" style="display: flex; flex-direction: column; gap: 1.5rem;">
-                            <li style="margin-bottom: 0;">
-                                <a href="https://github.com/prudhvinarayanameda" target="_blank" style="flex-direction: column; align-items: flex-start; padding-bottom: 0.5rem; border-bottom: 1px solid rgba(255,255,255,0.1);">
-                                    <div style="display: flex; justify-content: space-between; width: 100%;">
-                                        <strong style="color: var(--accent);">🔬 [01] SKIN CANCER DETECTION</strong>
-                                        <span class="arrow">→</span>
-                                    </div>
-                                    <span style="font-size: 0.85rem; color: var(--highlight); margin-top: 0.3rem;">Tech Stack: VGG16 & Inception V3</span>
-                                    <p style="font-size: 0.9rem; opacity: 0.7; line-height: 1.5; margin-top: 0.5rem; margin-bottom: 0; text-transform: none;">Developed a deep learning dual-model pipeline for highly accurate melanoma and basal cell carcinoma detection from dermoscopic images.</p>
-                                </a>
-                            </li>
-                            <li style="margin-bottom: 0;">
-                                <a href="https://github.com/prudhvinarayanameda" target="_blank" style="flex-direction: column; align-items: flex-start; padding-bottom: 0.5rem; border-bottom: 1px solid rgba(255,255,255,0.1);">
-                                    <div style="display: flex; justify-content: space-between; width: 100%;">
-                                        <strong style="color: var(--accent);">💳 [02] CREDIT SCORE PREDICTION</strong>
-                                        <span class="arrow">→</span>
-                                    </div>
-                                    <span style="font-size: 0.85rem; color: var(--highlight); margin-top: 0.3rem;">Tech Stack: Pandas, Scikit-Learn</span>
-                                    <p style="font-size: 0.9rem; opacity: 0.7; line-height: 1.5; margin-top: 0.5rem; margin-bottom: 0; text-transform: none;">Engineered a machine learning classification model achieving robust accuracy (80%) in predicting financial risk by analyzing comprehensive demographic data.</p>
-                                </a>
-                            </li>
-                            <li style="margin-bottom: 0;">
-                                <a href="https://github.com/prudhvinarayanameda" target="_blank" style="flex-direction: column; align-items: flex-start; padding-bottom: 0.5rem; border-bottom: 1px solid rgba(255,255,255,0.1);">
-                                    <div style="display: flex; justify-content: space-between; width: 100%;">
-                                        <strong style="color: var(--accent);">💼 [03] EMPLOYEE MGMT SYSTEM</strong>
-                                        <span class="arrow">→</span>
-                                    </div>
-                                    <span style="font-size: 0.85rem; color: var(--highlight); margin-top: 0.3rem;">Tech Stack: Spring Boot, React.js</span>
-                                    <p style="font-size: 0.9rem; opacity: 0.7; line-height: 1.5; margin-top: 0.5rem; margin-bottom: 0; text-transform: none;">Built a full-stack web application designed for enterprise HR operations, featuring secure authentication and a dynamic frontend dashboard.</p>
-                                </a>
-                            </li>
-                            <li style="margin-bottom: 0;">
-                                <a href="https://github.com/prudhvinarayanameda" target="_blank" style="flex-direction: column; align-items: flex-start;">
-                                    <div style="display: flex; justify-content: space-between; width: 100%;">
-                                        <strong style="color: var(--accent);">🐾 [04] ANIMAL CLASSIFICATION</strong>
-                                        <span class="arrow">→</span>
-                                    </div>
-                                    <span style="font-size: 0.85rem; color: var(--highlight); margin-top: 0.3rem;">Tech Stack: TensorFlow, Keras CNN</span>
-                                    <p style="font-size: 0.9rem; opacity: 0.7; line-height: 1.5; margin-top: 0.5rem; margin-bottom: 0; text-transform: none;">Trained a custom Convolutional Neural Network on a diverse visual dataset to swiftly and accurately classify multiple distinct species.</p>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="section-image-container">
-                        <img src="projects.png" alt="Creative AI Data Architecture" class="section-pic">
-                    </div>
-                </div>
-            </section>
+        <article class="skill-card reveal">
+          <p class="tag">Model builder</p>
+          <h2><span>01.</span> Machine Learning</h2>
+          <p>I build predictive models from raw data — cleaning, feature work, training and evaluation — and pick the algorithm the problem actually needs.</p>
+          <ul>
+            <li>Random Forest, XGBoost, Decision Trees</li>
+            <li>Clustering &amp; Association rules</li>
+            <li>Scikit-learn, SciPy</li>
+            <li>Model evaluation &amp; tuning</li>
+            <li>Credit scoring with 80% accuracy</li>
+          </ul>
+        </article>
 
-            <section id="interests" class="dynamic-section hidden">
-                <div class="text-block section-grid">
-                    <div class="section-text">
-                        <h2>05. INTERESTS 🎨</h2>
-                        <p>When I'm not training models, you can find me involved in:</p>
-                        <ul class="inline-list">
-                            <li>MUSIC</li>
-                            <li>DANCING</li>
-                            <li>PHOTOGRAPHY</li>
-                            <li>CONTENT CREATION & EDITING</li>
-                        </ul>
-                    </div>
-                    <div class="section-image-container">
-                        <img src="interests.png" alt="Abstract Artistic Representation" class="section-pic">
-                    </div>
-                </div>
-            </section>
+        <article class="skill-card reveal">
+          <p class="tag">Pixels to predictions</p>
+          <h2><span>02.</span> Deep Learning &amp; Vision</h2>
+          <p>Neural networks for image classification and sequence data, from custom CNNs to transfer learning with pre-trained architectures.</p>
+          <ul>
+            <li>CNN, RNN, LSTM</li>
+            <li>VGG16, Inception V3 ensembles</li>
+            <li>Keras Sequential models</li>
+            <li>Diverse training data for robustness</li>
+            <li>88.6% accuracy on animal classification</li>
+          </ul>
+        </article>
 
-            <section id="resume" class="dynamic-section hidden">
-                <div class="text-block">
-                    <h2>06. RESUME 📄</h2>
-                    <p>Want a complete overview of my experience, projects, and academics? Download my full CV below.
-                    </p>
-                    <a href="cv.pdf" download class="contact-btn file-dl">DOWNLOAD CV PDF</a>
-                </div>
-            </section>
+        <article class="skill-card reveal">
+          <p class="tag">End to end</p>
+          <h2><span>03.</span> Full-Stack Development</h2>
+          <p>I've shipped web apps as part of a Java full-stack team — designing features, fixing critical bugs and making the system faster.</p>
+          <ul>
+            <li>Java, Spring Boot</li>
+            <li>React.js, JavaScript</li>
+            <li>HTML, CSS, responsive UI</li>
+            <li>MySQL, SQL</li>
+            <li>20% system efficiency improvement</li>
+          </ul>
+        </article>
 
-            <section id="build" class="dynamic-section hidden">
-                <div class="text-block section-grid">
-                    <div class="section-text">
-                        <h2>07. BUILD PROCESS ⚙️</h2>
-                        <h3>The Tech Stack</h3>
-                        <br>
-                        <ul class="inline-list" style="margin-bottom: 2rem;">
-                            <li>HTML5 Semantic Structuring</li>
-                            <li>Vanilla CSS (Grid/Flexbox/Animations)</li>
-                            <li>Vanilla JavaScript (ES6+)</li>
-                            <li>Intersection Observer API</li>
-                        </ul>
-                        <br>
-                        <h3>Implementation Details</h3>
-                        <p>This portfolio was built entirely from scratch without complex frameworks to ensure maximum performance and granular control over animations.</p>
-                        <ul class="list-tech" style="font-size: 0.95rem;">
-                            <li>[✓] <strong>Navigation & Scroll:</strong> Custom scrollspy logic tracks viewports and updates the sticky sidebar active states in real-time.</li>
-                            <li>[✓] <strong>Interactive Cursor:</strong> A custom JS-driven cursor with lag-trailing effects utilizing requestAnimationFrame for smooth 60fps rendering.</li>
-                            <li>[✓] <strong>Aesthetic Effects:</strong> CSS mix-blend-modes handle the background image integration, and CSS Keyframes drive the title's glitch animation.</li>
-                        </ul>
-                    </div>
-                </div>
-            </section>
+        <article class="skill-card reveal">
+          <p class="tag">Numbers that talk</p>
+          <h2><span>04.</span> Data Analysis</h2>
+          <p>Exploring, cleaning and visualising data so patterns are obvious before a single model is trained.</p>
+          <ul>
+            <li>Python: NumPy, Pandas</li>
+            <li>Matplotlib, Seaborn</li>
+            <li>NLTK for text data</li>
+            <li>R &amp; SQL</li>
+            <li>Google Cloud Data Analyst certified</li>
+          </ul>
+        </article>
 
-            <section id="contact" class="dynamic-section hidden">
-                <div class="text-block">
-                    <h2>08. CONTACT 📬</h2>
-                    <p>Let's collaborate on cool AI stuff.</p>
-                    <a href="mailto:prudhvi.narayanam24@gmail.com" class="contact-btn">GET IN TOUCH</a>
-                </div>
-            </section>
+        <article class="skill-card reveal">
+          <p class="tag">In your pocket</p>
+          <h2><span>05.</span> Android Development</h2>
+          <p>Native Android apps in Java with a focus on clean, intuitive interfaces and smooth interactions.</p>
+          <ul>
+            <li>Android Studio, Java</li>
+            <li>Media playback &amp; navigation</li>
+            <li>UI/UX for mobile</li>
+            <li>Certified by Diginique TechLabs, IIT Roorkee</li>
+          </ul>
+        </article>
+
+        <article class="skill-card reveal">
+          <p class="tag">Polyglot</p>
+          <h2><span>06.</span> Programming Languages</h2>
+          <p>Comfortable moving between systems languages, scripting and the web depending on what the job calls for.</p>
+          <ul>
+            <li>Python</li>
+            <li>Java</li>
+            <li>C, C++</li>
+            <li>R, SQL</li>
+            <li>JavaScript, HTML, CSS</li>
+          </ul>
+        </article>
+
+      </div>
+
+      <aside class="skills-sticky" aria-hidden="true">
+        <div class="sticky-card">
+          <img src="portrait.jpg" alt="">
+          <div class="sticky-overlay">
+            <p class="sticky-name">Prudhvi Meda</p>
+            <p class="sticky-role">ML &amp; Full-Stack Developer</p>
+          </div>
         </div>
-    </main>
+      </aside>
+    </section>
 
-    <!-- Floating Easter Egg Image Container -->
-    <div id="floating-image" class="floating-image hidden"></div>
+    <!-- ============ CTA STRIP ============ -->
+    <section class="cta-strip">
+      <p class="tag tag-center">Curious at the core</p>
+      <div class="cta-buttons">
+        <a href="#contact" class="btn btn-dark">Get in touch</a>
+        <button type="button" class="btn btn-light" data-copy="prudhvi.narayanam24@gmail.com">Copy e-mail</button>
+        <a href="cv.pdf" class="btn btn-accent" download>Download CV</a>
+      </div>
+    </section>
 
-    <script src="script.js"></script>
+    <!-- ============ MARQUEE ============ -->
+    <div class="marquee" aria-label="Highlights">
+      <div class="marquee-track">
+        <span>B.Tech Computer Science 2024</span><i>/</i>
+        <span>2 Internships</span><i>/</i>
+        <span>5 Certifications</span><i>/</i>
+        <span>88.6% CNN Accuracy</span><i>/</i>
+        <span>80% Credit Score Accuracy</span><i>/</i>
+        <span>20% Efficiency Gain</span><i>/</i>
+        <span>Kavach Hackathon Team Lead</span><i>/</i>
+        <span aria-hidden="true">B.Tech Computer Science 2024</span><i>/</i>
+        <span aria-hidden="true">2 Internships</span><i>/</i>
+        <span aria-hidden="true">5 Certifications</span><i>/</i>
+        <span aria-hidden="true">88.6% CNN Accuracy</span><i>/</i>
+        <span aria-hidden="true">80% Credit Score Accuracy</span><i>/</i>
+        <span aria-hidden="true">20% Efficiency Gain</span><i>/</i>
+        <span aria-hidden="true">Kavach Hackathon Team Lead</span><i>/</i>
+      </div>
+    </div>
+
+    <!-- ============ CERTIFICATIONS ============ -->
+    <section class="certs" aria-labelledby="certs-title">
+      <h2 class="section-label" id="certs-title">Certifications &amp; recognition</h2>
+      <ol class="cert-list">
+        <li class="reveal"><span class="num">01</span><span class="cert-title">Programming in Java</span><span class="cert-org">NPTEL</span><span class="cert-date">Certificate</span></li>
+        <li class="reveal"><span class="num">02</span><span class="cert-title">Deep Learning</span><span class="cert-org">NPTEL</span><span class="cert-date">Certificate</span></li>
+        <li class="reveal"><span class="num">03</span><span class="cert-title">Android App Development using Java</span><span class="cert-org">Diginique TechLabs, IIT Roorkee</span><span class="cert-date">Certificate</span></li>
+        <li class="reveal"><span class="num">04</span><span class="cert-title">Data Analyst</span><span class="cert-org">Google Cloud Readiness</span><span class="cert-date">Certificate</span></li>
+        <li class="reveal"><span class="num">05</span><span class="cert-title">Python Programming</span><span class="cert-org">Cisco</span><span class="cert-date">Certificate</span></li>
+        <li class="reveal"><span class="num">06</span><span class="cert-title">Team Lead</span><span class="cert-org">Kavach Hackathon</span><span class="cert-date">2023</span></li>
+      </ol>
+    </section>
+
+    <!-- ============ STATEMENT ============ -->
+    <section class="statement" id="about">
+      <p class="fill-text" data-fill>I'm a Computer Science graduate who likes turning messy data into models that make decisions, and ideas into apps people can actually use. I learn fast, work well in teams, and care about the result being measured, not just built.</p>
+    </section>
+
+    <!-- ============ PROJECTS ============ -->
+    <section class="work" id="work">
+      <div class="section-head">
+        <p class="tag">Things I've built</p>
+        <h2 class="section-title">Selected Projects</h2>
+      </div>
+
+      <div class="work-grid">
+        <article class="project reveal p-feature">
+          <div class="project-visual v-skin" aria-hidden="true">
+            <div class="viz-grid"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+            <code>ensemble(VGG16, InceptionV3) → benign | malignant</code>
+          </div>
+          <div class="project-body">
+            <p class="project-meta">Final-year project · Deep Learning</p>
+            <h3>Deep Ensemble for Skin Cancer Detection</h3>
+            <p>Deep learning models built on VGG16 and Inception V3 that classify skin lesions as benign or malignant, plus a web app where dermatologists upload an image and get a real-time prediction.</p>
+            <ul class="chips"><li>Python</li><li>Keras</li><li>VGG16</li><li>Inception V3</li><li>Web app</li></ul>
+          </div>
+        </article>
+
+        <article class="project reveal">
+          <div class="project-visual v-credit" aria-hidden="true">
+            <div class="bars"><span style="--h:40%"></span><span style="--h:65%"></span><span style="--h:52%"></span><span style="--h:80%"></span><span style="--h:72%"></span></div>
+            <strong>80%</strong>
+          </div>
+          <div class="project-body">
+            <p class="project-meta">Henotic IT Solutions · ML</p>
+            <h3>Credit Score Prediction</h3>
+            <p>Random Forest, XGBoost and Decision Tree models that predict credit scores with 80% accuracy to support better lending decisions.</p>
+            <ul class="chips"><li>Scikit-learn</li><li>XGBoost</li><li>Pandas</li></ul>
+          </div>
+        </article>
+
+        <article class="project reveal">
+          <div class="project-visual v-ems" aria-hidden="true">
+            <div class="table-mock"><span></span><span></span><span></span><span></span></div>
+            <strong>+20%</strong>
+          </div>
+          <div class="project-body">
+            <p class="project-meta">Henotic IT Solutions · Full-Stack</p>
+            <h3>Employee Management System</h3>
+            <p>Built with a Java full-stack team: designed features, solved technical blockers and fixed critical bugs for a 20% gain in system efficiency.</p>
+            <ul class="chips"><li>Java</li><li>Spring Boot</li><li>React.js</li><li>MySQL</li></ul>
+          </div>
+        </article>
+
+        <article class="project reveal">
+          <div class="project-visual v-animal" aria-hidden="true">
+            <div class="layers"><span></span><span></span><span></span><span></span></div>
+            <strong>88.6%</strong>
+          </div>
+          <div class="project-body">
+            <p class="project-meta">Computer Vision</p>
+            <h3>Animal Prediction</h3>
+            <p>A CNN built with the Keras Sequential API, trained on varied species, poses and environments, reaching 88.6% classification accuracy.</p>
+            <ul class="chips"><li>CNN</li><li>Keras</li><li>Image classification</li></ul>
+          </div>
+        </article>
+
+        <article class="project reveal">
+          <div class="project-visual v-music" aria-hidden="true">
+            <div class="wave"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+          </div>
+          <div class="project-body">
+            <p class="project-meta">Android · In progress</p>
+            <h3>Music Application</h3>
+            <p>An Android music player focused on an intuitive interface, smooth track transitions and easy navigation.</p>
+            <ul class="chips"><li>Android Studio</li><li>Java</li><li>Media playback</li></ul>
+          </div>
+        </article>
+
+        <article class="project reveal">
+          <div class="project-visual v-game" aria-hidden="true">
+            <div class="game-cards"><span></span><span></span><span></span></div>
+            <strong>+30%</strong>
+          </div>
+          <div class="project-body">
+            <p class="project-meta">Front-end</p>
+            <h3>Game Purchasing Website</h3>
+            <p>A game store front-end with clear categories and hardware requirements for each title, with 30% better cross-browser compatibility.</p>
+            <ul class="chips"><li>HTML</li><li>CSS</li><li>Responsive UI</li></ul>
+          </div>
+        </article>
+      </div>
+
+      <a class="more-card reveal" href="https://github.com/prudhvimeda" target="_blank" rel="noopener">
+        <span class="more-small">Want to see the code?</span>
+        <span class="more-big">Browse my GitHub</span>
+        <span class="more-sub">Source for projects and experiments</span>
+      </a>
+    </section>
+
+    <!-- ============ JOURNEY ============ -->
+    <section class="journey" id="journey">
+      <div class="section-head">
+        <p class="tag">How I got here</p>
+        <h2 class="section-title">Experience &amp; Education</h2>
+      </div>
+
+      <ol class="timeline">
+        <li class="reveal">
+          <div class="tl-role">Full Stack Developer Intern</div>
+          <div class="tl-org">IIDT · Approved by AICTE</div>
+          <div class="tl-date">2024</div>
+        </li>
+        <li class="reveal">
+          <div class="tl-role">Java Full-Stack Intern</div>
+          <div class="tl-org">Henotic IT Solutions</div>
+          <div class="tl-date">2023</div>
+        </li>
+        <li class="reveal">
+          <div class="tl-role">Hackathon Team Lead</div>
+          <div class="tl-org">Kavach Hackathon · cybersecurity</div>
+          <div class="tl-date">2023</div>
+        </li>
+        <li class="reveal">
+          <div class="tl-role">B.Tech, Computer Science &amp; Engineering <em>7.74 CGPA</em></div>
+          <div class="tl-org">Sagi Rama Krishnam Raju Engineering College, Bhimavaram</div>
+          <div class="tl-date">2020 – 2024</div>
+        </li>
+        <li class="reveal">
+          <div class="tl-role">Intermediate (M.P.C) <em>8.4</em></div>
+          <div class="tl-org">Sri Chaitanya Co-Ed Jr College, Vijayawada</div>
+          <div class="tl-date">2018 – 2020</div>
+        </li>
+        <li class="reveal">
+          <div class="tl-role">SSC (10th) <em>9.3</em></div>
+          <div class="tl-org">Tiny Tots High School, Narasaraopet</div>
+          <div class="tl-date">2017 – 2018</div>
+        </li>
+      </ol>
+
+      <div class="langs reveal">
+        <p class="section-label">Languages</p>
+        <p><strong>Telugu</strong> — native &nbsp;·&nbsp; <strong>English</strong> — B2, independent user</p>
+      </div>
+    </section>
+
+    <!-- ============ FAQ ============ -->
+    <section class="faq" aria-labelledby="faq-title">
+      <h2 class="section-label" id="faq-title">Quick answers</h2>
+      <details class="reveal">
+        <summary>What kind of role are you looking for?</summary>
+        <p>Entry-level roles in machine learning, data science or full-stack development — anywhere I can build things that ship and learn from people better than me.</p>
+      </details>
+      <details class="reveal">
+        <summary>Do you prefer ML or web development?</summary>
+        <p>Both, and they work best together. A model is only useful when people can reach it, which is why my skin-cancer project shipped with a web interface.</p>
+      </details>
+      <details class="reveal">
+        <summary>How do you work in a team?</summary>
+        <p>I led my team at the Kavach Hackathon 2023 and worked inside a Java full-stack team at Henotic. I communicate early, own my part and help unblock others.</p>
+      </details>
+      <details class="reveal">
+        <summary>Are you open to relocating or remote work?</summary>
+        <p>Yes — I'm open to on-site, hybrid and remote roles.</p>
+      </details>
+    </section>
+
+    <!-- ============ CONTACT ============ -->
+    <section class="contact" id="contact">
+      <p class="tag tag-center">Let's get started</p>
+      <h2 class="contact-title">Have a role or a project<br>in mind?</h2>
+      <p class="contact-sub">Send me a note with what you're working on. I usually reply within a day.</p>
+      <div class="cta-buttons">
+        <a href="mailto:prudhvi.narayanam24@gmail.com" class="btn btn-accent">Email me</a>
+        <button type="button" class="btn btn-light" data-copy="prudhvi.narayanam24@gmail.com">Copy e-mail</button>
+        <a href="cv.pdf" class="btn btn-dark" download>Download CV</a>
+      </div>
+      <ul class="socials">
+        <li><a href="https://github.com/prudhvimeda" target="_blank" rel="noopener">GitHub ↗</a></li>
+        <li><a href="mailto:prudhvi.narayanam24@gmail.com">prudhvi.narayanam24@gmail.com</a></li>
+      </ul>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p class="footer-name" aria-hidden="true">PRUDHVI MEDA</p>
+    <p class="footer-meta">© <span id="year">2026</span> Prudhvi Narayana Meda</p>
+  </footer>
+
+  <div class="toast" role="status" aria-live="polite"></div>
+
+  <script src="script.js"></script>
 </body>
-
 </html>
