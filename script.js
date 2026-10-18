@@ -66,7 +66,7 @@
     sections.forEach((s) => navIo.observe(s));
   }
 
-  // Copy e-mail buttons
+  // Copy email buttons
   const toast = document.querySelector('.toast');
   let toastTimer;
   const showToast = (msg) => {
@@ -79,7 +79,7 @@
     btn.addEventListener('click', async () => {
       try {
         await navigator.clipboard.writeText(btn.dataset.copy);
-        showToast('E-mail copied');
+        showToast('Email copied');
       } catch {
         showToast(btn.dataset.copy);
       }
